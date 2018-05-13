@@ -1,0 +1,162 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>800Best_武昌水果湖二派</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+		<link rel="shortcut icon" href="ico/favicon.ico">
+		<link rel="apple-touch-icon" href="ico/apple-touch-icon.png">
+		<link rel="stylesheet" href="css/main.css">
+		<!-- 新 Bootstrap4 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+ 
+		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+ 
+		<!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+		<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+ 
+		<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+		<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+        <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+		<script src="js/cryptico.min.js"></script>
+		<script src="js/Vue_template.js"></script>
+    </head>
+   	<body>      
+	   	<div id="head">
+		   <!-- header -->
+		   <app-header></app-header>
+    	</div>		
+		<hr/>
+		<div class="container-fluid" id="vm">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-12">
+						<div class="jumbotron jumbotron-fluid">
+							<div class="container">
+								<h1 class="display-7">序列化签收数据/扫描数据</h1>
+								<hr class="my-2">
+								<div class="form-group">
+								  <label for="searchTransOrderStatusSummary">签收数据：</label>
+								  <input v-model="searchTransOrderStatusSummary" type="text" class="form-control" name="searchTransOrderStatusSummary" id="searchTransOrderStatusSummary">
+								  <label for="selectBalanceStatementBySoForFrontPage">账单数据：</label>
+								  <input v-model="selectBalanceStatementBySoForFrontPage" type="text" class="form-control" name="selectBalanceStatementBySoForFrontPage" id="selectBalanceStatementBySoForFrontPage">
+								  <label for="searchScanRate">扫描数据：</label>
+								  <input v-model="searchScanRate" type="text" class="form-control" name="searchScanRate" id="searchScanRate">
+								
+								</div>
+								<button type="button" class="btn btn-primary" v-on:click="postV5Data">提交</button>
+							</div>
+							<hr/>
+							<div  v-show="newdata">
+							<div class="row">
+								<div class="col-md-4">
+									<p>StatusSummary</p>
+									<table class="table table-striped">
+										<thead class="thead-light"> 
+											<tr>
+												<th>id</th>
+												<th>val</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="(i,item) in json.searchTransOrderStatusSummary" :key="item.id">
+												<td>{{item}}</td><td>{{i}}</td>												
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-4">
+										<p>SoForFrontPage</p>
+										<table class="table table-striped">
+											<thead class="thead-light"> 
+												<tr>
+													<th>id</th>
+													<th>val</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr v-for="(i,item) in json.selectBalanceStatementBySoForFrontPage" :key="item.id" v-if="item != 'feeList'">
+													<td>{{item}}</td><td>{{i}}</td>												
+												</tr>
+												<tr v-else>
+													<table>
+														<tr v-for="item in json.feeList">
+															<td>{{item.priceType}}</td><td>{{item.money}}</td>
+														</tr>
+													</table>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="col-md-4">
+											<p>ScanRate</p>
+											<table class="table table-striped">
+												<thead class="thead-light"> 
+													<tr>
+														<th>id</th>
+														<th>val</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr v-for="(i,item) in json.searchScanRate" :key="item.id">
+														<td>{{item}}</td><td>{{i}}</td>												
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+							</div>
+							<hr/>
+
+							<!--          -->
+							<div class="card" v-show="newdata">
+							  <div class="card-body">
+								<blockquote class="blockquote">
+								  <p>序列化条款</p>
+								  <p>合计共有<small>{{dispUnAcceptCount}}</small>票货物未签收</p>
+								  <div class="form-group">
+									<label for="">{{select.a.name}}</label>
+									<select class="form-control" name="" id="" v-model="select.a.val">
+										<option value="0">0</option>
+									  <option v-for="num in dispUnAcceptCount" v-bind:value="num">{{num}}</option>
+									</select>
+									<label for="">{{select.b.name}}</label>
+									<select class="form-control" name="" id="" v-model="select.b.val">
+										<option value="0">0</option>
+									  <option v-for="num in dispUnAcceptCount" v-bind:value="num">{{num}}</option>
+									</select>
+									<label for="">{{select.c.name}}</label>
+									<select class="form-control" name="" id="" v-model="select.c.val">
+										<option value="0">0</option>
+									  <option v-for="num in dispUnAcceptCount" v-bind:value="num">{{num}}</option>
+									</select>
+									<label for="">{{select.d.name}}</label>
+									<select class="form-control" name="" id="" v-model="select.d.val">
+										<option value="0">0</option>
+									  <option v-for="num in dispUnAcceptCount" v-bind:value="num">{{num}}</option>
+									</select>
+								  </div>
+								</blockquote>
+							  </div>
+							</div>
+							<!--         -->
+							<div class="card text-left">
+							  <img class="card-img-top"  alt="">
+							  <div class="card-body">
+								<h4 class="card-title">格式化条文</h4>
+								<textarea name="" id="" cols="80" rows="10">{{bulletin}}</textarea>
+							  </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>     
+    </body>
+</html>
