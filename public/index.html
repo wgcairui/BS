@@ -27,7 +27,11 @@
    	<body>      
 	   	<div id="head">
 		   <!-- header -->
-		   <app-header></app-header>
+			 <app-header></app-header>
+			 
+				<nav class="nav justify-content-center|justify-content-end">
+					<a  v-for="i in links" class="nav-link active" :href="i.href"  :target="i.target" :title="i.tittle">{{i.text}}</a>
+				</nav>
     	</div>		
 		<hr/>
 		<div class="container-fluid" id="vm">
@@ -148,8 +152,23 @@
 							  <div class="card-body">
 								<h4 class="card-title">格式化条文</h4>
 								<textarea name="" id="" cols="80" rows="10">{{bulletin}}</textarea>
-							  </div>
+								</div>
+								<button type="button" class="btn btn-primary" v-on:click="bulletinWriteLog">写入log</button>
 							</div>
+							<!--     -->
+							<hr/>
+							<table class="table table-striped">
+								<thead class="thead-inverse">
+									<tr><th>Dates</th><th>Data</th></tr></thead>
+									<tbody>
+										<tr v-for="item in bulletin_list">
+											<td>{{item.date}}</td>
+											<td>{{item.data}}</td>
+										</tr>
+									</tbody>
+							</table>
+
+							<!--     -->
 						</div>
 					</div>
 				</div>

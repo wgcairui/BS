@@ -1,12 +1,13 @@
 /* jshint esversion:6 */
 /*
 $.getScript('js/wait.js');
-	$.ajaxSetup({
-		type:'GET',
-		url:'/',
-		dataType:'json'
-	});
-	*/
+*/
+$.ajaxSetup({
+	type:'GET',
+	url:'/',
+	dataType:'json'
+});
+	
 //el:vm
 	var vm = new Vue({
 		el:'#vm',
@@ -15,6 +16,7 @@ $.getScript('js/wait.js');
 			searchTransOrderStatusSummary:'',
 			selectBalanceStatementBySoForFrontPage:'{}',
 			searchScanRate:'',
+			bulletin_list:[{date:'null',data:'null'}],
 			json:{
 				searchTransOrderStatusSummary:{},
 				selectBalanceStatementBySoForFrontPage:{},
@@ -114,7 +116,34 @@ $.getScript('js/wait.js');
 					}
 				});
 				
+			},
+
+			//
+			bulletinWriteLog(){
+				$.ajax({
+					url:'get',
+					data:{						
+						id:'bulletinWriteLog',
+						data:this.bulletin
+					},
+					success:(data)=>{
+						console.log(data);
+					}
+				});
 			}
+		},
+
+		//create;
+		created:()=>{
+			$.ajax({
+				url:'get',
+				data:{
+					id:'get_bulletin'
+				},
+				success:(data)=>{
+					vm.bulletin_list = data;
+				}
+			});
 		}
 		
 	});
@@ -122,7 +151,11 @@ $.getScript('js/wait.js');
 	var vm2 = new Vue({
 		el:"#head",
 		data:{
-			
+			Manage:"Best SGH",
+			links:[
+				{href:'https://v5.800best.com/login',target:'_blank',tittle:'V5',text:'V5',type:'link'},
+				{href:'details.html',target:'_blank',tittle:'details',text:'月度账目核算',type:'link'}
+			]
 		},
 		
 		

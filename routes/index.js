@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 const parse = require('../lib/json_parse');
+const mongo = require('../lib/Mongo');
 /* GET home page. */
 router.get('/get', function(req, res) {
   let id = req.query.id;
@@ -17,7 +18,27 @@ router.get('/get', function(req, res) {
       };
 
       res.json(postV5Data());
-      break;
+    break;
+
+    case 'bulletinWriteLog':
+      const bulletinWriteLog = ()=>{
+        let query = req.query.data;
+        let json = {date:new Date(),data:query};
+          mongo.insert('BS','bulletin',json,(result)=>{
+            res.json(result);
+          });
+      };
+      bulletinWriteLog();
+    break;
+
+    case 'get_bulletin':
+      const get_bulletin = ()=>{
+        mongo.findlimit('BS','bulletin',{},10,(result)=>{
+          res.json(result);
+        });
+      };
+      get_bulletin();
+    break;
 
   }
 });
