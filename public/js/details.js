@@ -8,40 +8,25 @@ $.ajaxSetup({
 
 //vm
 const vm = new Vue({
-    el:'vm',
+    el:'#vm',
     data:{
-
+        file:[]
     },
     methods:{
-       //upload
-       upload:function(){
-        var data = new FormData();
-        var file = $("#file")[0].files[0];
-        //console.log(file);
-        if(file.size > 50331648) return(alert('上传文件不能大于48MB'));
-        var fileobj = {name:file.name,size:file.size,info:'正在上传'};
-        this.uploadfiles.push(fileobj);
-        data.append('file',file);
-        //console.log(data);
-        $.ajax({
-            url:'/upload',
-            type:'POST',
-            dataType:'json',
-            cache:false,
-            processData:false,
-            contentType:false,
-            data:data,
-            success:function(data){
-                for(var i=0;i<manage1.uploadfiles.length;i++){
-                    if(manage1.uploadfiles[i].name === fileobj.name){
-                        console.log(fileobj.name);
-                        manage1.uploadfiles[i].info = data.info;
-                    }
-                }
-                //alert(data.info);
+       //ParesXlsx 解构xlsx文档
+       ParesXlsx(){
+           $.ajax({
+            type:'GET',
+            url:'get',
+            data:{
+                id:'ParesXlsx'
+            },
+            success:(data)=>{
+                console.log(data);
             }
-        });
-    } 
+           });
+       }
+    
     }
 });
 
@@ -49,3 +34,30 @@ const vm = new Vue({
 const vm2 = new Vue({
     el:'#head'
 });
+
+$('#easyContainer').easyUpload({
+    allowFileTypes: '*.jpg;*.xlsx',//允许上传文件类型，格式';*.doc;*.pdf'
+    allowFileSize: 100000,//允许上传文件大小(KB)
+    selectText: '选择文件',//选择文件按钮文案
+    multi: true,//是否允许多文件上传
+    multiNum: 5,//多文件上传时允许的文件数
+    showNote: true,//是否展示文件上传说明
+    note: '提示：最多上传5个文件，支持格式为xlsx',//文件上传说明
+    showPreview: true,//是否显示文件预览
+    url: 'upload',//上传文件地址
+    fileName: 'file',//文件filename配置参数
+    formParam: {
+      //token: $.cookie('token_cookie')//不需要验证token时可以去掉
+    },//文件filename以外的配置参数，格式：{key1:value1,key2:value2}
+    timeout: 30000,//请求超时时间
+    okCode: 200,//与后端返回数据code值一致时执行成功回调，不配置默认200
+    successFunc: function(res) {
+      console.log('成功回调', res);
+    },//上传成功回调函数
+    errorFunc: function(res) {
+      console.log('失败回调', res);
+    },//上传失败回调函数
+    deleteFunc: function(res) {
+      console.log('删除回调', res);
+    }//删除文件回调函数
+  });

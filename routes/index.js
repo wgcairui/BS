@@ -3,6 +3,10 @@ var express = require('express');
 var router = express.Router();
 const parse = require('../lib/json_parse');
 const mongo = require('../lib/Mongo');
+const fs = require('fs');
+const path = require('path');
+const ParesXlsx = require('../lib/ParseSlsx');
+
 /* GET home page. */
 router.get('/get', function(req, res) {
   let id = req.query.id;
@@ -40,11 +44,36 @@ router.get('/get', function(req, res) {
       get_bulletin();
     break;
 
+    case 'ParesXlsx':
+      
+    break;
+
   }
 });
 
-router.post('/',function (req,res) {
-  console.log(req);
+//响应upload上传请求；
+router.post('/upload',function (req,res) {
+  if(!req.files) return res.json({code:-1,info:'file err'});
+  if(req.files.length === 0){
+    return res.json({status:0,info:'upload error,no file object'});
+  } 
+  if(req.files[0].size > 50331648){
+    return res.json({status:0,info:'upload error,file size maxsize out'});
+  } 
+ 
+  //console.log(req.files);
+  const files = req.files[0];
+  let originalname = files.originalname;
+  let tempPath = files.path;
+  fs.rename(tempPath,path.join('public/file/',originalname),(err)=>{
+    if(err){
+      console.log(err);
+      return res.json({code:-1,info:err});
+    }
+    return res.json({code:200,info:path.join("文件",originalname,"上传已完成")});
+  });
+
+
 });
 
 

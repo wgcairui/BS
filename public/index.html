@@ -45,8 +45,6 @@
 								<div class="form-group">
 								  <label for="searchTransOrderStatusSummary">签收数据：</label>
 								  <input v-model="searchTransOrderStatusSummary" type="text" class="form-control" name="searchTransOrderStatusSummary" id="searchTransOrderStatusSummary">
-								  <label for="selectBalanceStatementBySoForFrontPage">账单数据：</label>
-								  <input v-model="selectBalanceStatementBySoForFrontPage" type="text" class="form-control" name="selectBalanceStatementBySoForFrontPage" id="selectBalanceStatementBySoForFrontPage">
 								  <label for="searchScanRate">扫描数据：</label>
 								  <input v-model="searchScanRate" type="text" class="form-control" name="searchScanRate" id="searchScanRate">
 								
@@ -56,7 +54,7 @@
 							<hr/>
 							<div  v-show="newdata">
 							<div class="row">
-								<div class="col-md-4">
+								<div class="col-md-6">
 									<p>StatusSummary</p>
 									<table class="table table-striped">
 										<thead class="thead-light"> 
@@ -72,30 +70,8 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="col-md-4">
-										<p>SoForFrontPage</p>
-										<table class="table table-striped">
-											<thead class="thead-light"> 
-												<tr>
-													<th>id</th>
-													<th>val</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr v-for="(i,item) in json.selectBalanceStatementBySoForFrontPage" :key="item.id" v-if="item != 'feeList'">
-													<td>{{item}}</td><td>{{i}}</td>												
-												</tr>
-												<tr v-else>
-													<table>
-														<tr v-for="item in json.feeList">
-															<td>{{item.priceType}}</td><td>{{item.money}}</td>
-														</tr>
-													</table>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="col-md-4">
+							
+									<div class="col-md-6">
 											<p>ScanRate</p>
 											<table class="table table-striped">
 												<thead class="thead-light"> 

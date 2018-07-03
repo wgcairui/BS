@@ -14,12 +14,10 @@ $.ajaxSetup({
 		data:{
 			newdata:false,
 			searchTransOrderStatusSummary:'',
-			selectBalanceStatementBySoForFrontPage:'{}',
 			searchScanRate:'',
 			bulletin_list:[{date:'null',data:'null'}],
 			json:{
 				searchTransOrderStatusSummary:{},
-				selectBalanceStatementBySoForFrontPage:{},
 				searchScanRate:{},
 				feeList:{}
 			},
@@ -90,7 +88,6 @@ $.ajaxSetup({
 						id:'postV5Data',
 						data:{
 							searchTransOrderStatusSummary:this.searchTransOrderStatusSummary,
-							selectBalanceStatementBySoForFrontPage:this.selectBalanceStatementBySoForFrontPage,
 							searchScanRate:this.searchScanRate
 						}
 					},
@@ -98,14 +95,7 @@ $.ajaxSetup({
 						vm.newdata = true;
 						vm.json.searchScanRate = data.searchScanRate;
 						vm.json.searchTransOrderStatusSummary = data.searchTransOrderStatusSummary;
-						vm.json.selectBalanceStatementBySoForFrontPage = data.selectBalanceStatementBySoForFrontPage;
-						vm.json.feeList = data.selectBalanceStatementBySoForFrontPage.feeList;
 						//
-						vm.argment.siteName = data.searchScanRate.siteName;
-						vm.argment.StatusSummary.dispShouldAcceptCount = data.searchTransOrderStatusSummary.dispShouldAcceptCount;
-						vm.argment.StatusSummary.dispAcceptedCount = data.searchTransOrderStatusSummary.dispAcceptedCount;
-						vm.argment.StatusSummary.dispUnAcceptCount = data.searchTransOrderStatusSummary.dispUnAcceptCount;
-						vm.argment.StatusSummary.dispAcceptPromptness = data.searchTransOrderStatusSummary.dispAcceptPromptness;
 						//
 						vm.argment.ScanRate.curArrvNotScanCount = data.searchScanRate.curArrvNotScanCount;
 						vm.argment.ScanRate.curArrvScanedCount = data.searchScanRate.curArrvScanedCount;
@@ -128,6 +118,7 @@ $.ajaxSetup({
 					},
 					success:(data)=>{
 						console.log(data);
+						alert('write log in mongo ok!!');
 					}
 				});
 			}
@@ -154,7 +145,8 @@ $.ajaxSetup({
 			Manage:"Best SGH",
 			links:[
 				{href:'https://v5.800best.com/login',target:'_blank',tittle:'V5',text:'V5',type:'link'},
-				{href:'details.html',target:'_blank',tittle:'details',text:'月度账目核算',type:'link'}
+				{href:'details.html',target:'_blank',tittle:'details',text:'月度账目核算',type:'link'},
+				{href:'https://www.barcode-generator.de/V2/zh/index.jsp',target:'_blank',tittle:'shap code',text:'批量生成条形码',tpye:'link'}
 			]
 		},
 		

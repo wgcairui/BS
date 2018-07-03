@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 
 var app = express();
+//multer 处理upload上传事件
+//var multer = require('multer');
+var upload = require('multer')({dest:'uploads/'});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,6 +22,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.post('/upload',upload.any(), function(req,res,next){
+    next();
+  });
 
 app.use('/', routes);
 
