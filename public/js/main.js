@@ -96,6 +96,10 @@ $.ajaxSetup({
 						vm.json.searchScanRate = data.searchScanRate;
 						vm.json.searchTransOrderStatusSummary = data.searchTransOrderStatusSummary;
 						//
+						vm.argment.StatusSummary.dispAcceptedCount = data.searchTransOrderStatusSummary.dispAcceptedCount;
+						vm.argment.StatusSummary.dispShouldAcceptCount = data.searchTransOrderStatusSummary.dispShouldAcceptCount;
+						vm.argment.StatusSummary.dispUnAcceptCount = data.searchTransOrderStatusSummary.dispUnAcceptCount;
+						vm.argment.StatusSummary.dispAcceptPromptness = data.searchTransOrderStatusSummary.dispAcceptPromptness;
 						//
 						vm.argment.ScanRate.curArrvNotScanCount = data.searchScanRate.curArrvNotScanCount;
 						vm.argment.ScanRate.curArrvScanedCount = data.searchScanRate.curArrvScanedCount;
