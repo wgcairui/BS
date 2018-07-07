@@ -51,9 +51,39 @@
 				</div>
 				<hr/>
 				<div class="col-md-12">
-					
+						<table class="table" class="table-striped table-condensed table-striped table-bordered table-hover table-responsive">
+							
+							<tbody  v-for="(item,name) in Accpt">
+								<tr>
+										<th>Accpt</th>
+										<th v-for="costtype in item">{{costtype.costtype}}</th>
+										<th>合计</th>
+								</tr>
+								<tr>
+									<td>{{name}}</td>
+									<td v-for="cost in item">{{cost.cost}}</td>
+									<td>{{num(item)}}</td>
+								</tr>								
+							</tbody>
+						</table>
+					</div>
+				<hr/>
+				<div class="col-md-12">
+					<table class="table"  class="table-striped table-condensed table-striped table-bordered table-hover table-responsive">
+						<thead>
+							<tr>
+								<th  v-for="item in Company" >{{item.name}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td v-for="item in Company">{{item.val}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
+
 		</div>
         <script src="js/plugins.js"></script>
         <script src="js/details.js"></script>     

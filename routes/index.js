@@ -43,9 +43,17 @@ router.get('/get', function(req, res) {
       };
       get_bulletin();
     break;
-
+      //提取'V5导出-预付款明细查询.xlsx','V5导出-签收查询.xlsx'，返回json
     case 'ParesXlsx':
-      
+      ParesXlsx.Classify_Codeinfo('V5导出-预付款明细查询.xlsx','V5导出-签收查询.xlsx',(data)=>{
+        res.json(data);
+      });
+    break;
+      //提取
+    case 'ParesXlsx_company':
+      ParesXlsx.Classify_Company('V5导出-预付款对账统计.xlsx',(data)=>{
+        res.json(data);
+      });
     break;
 
   }

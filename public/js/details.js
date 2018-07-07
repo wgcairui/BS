@@ -10,9 +10,18 @@ $.ajaxSetup({
 const vm = new Vue({
     el:'#vm',
     data:{
-        file:[]
+        file:[],
+        Accpt:{},
+        Company:{}
     },
     methods:{
+        num(item){
+            var val = 0;
+            for(var i in item){
+                val += item[i].cost;
+            }
+            return val;
+        },
        //ParesXlsx 解构xlsx文档
        ParesXlsx(){
            $.ajax({
@@ -22,7 +31,18 @@ const vm = new Vue({
                 id:'ParesXlsx'
             },
             success:(data)=>{
-                console.log(data);
+                vm.Accpt = data;
+            }
+           });
+
+           $.ajax({
+            type:'GET',
+            url:'get',
+            data:{
+                id:'ParesXlsx_company'
+            },
+            success:(data)=>{
+                vm.Company = data;
             }
            });
        }
