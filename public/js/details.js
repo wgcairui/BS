@@ -12,9 +12,59 @@ const vm = new Vue({
     data:{
         file:[],
         Accpt:{},
-        Company:{}
+        Company:{},
+        publicEx:0,
+        arg:{           
+            cr:{
+                pf:0,
+                sl:0,
+                sx:0,
+                tf:0,
+                zc:0,
+                dk:0
+            },
+            lf:{
+                pf:0,
+                sl:0,
+                sx:0,
+                tf:0,
+                zc:0,
+                dk:0
+            },
+            zt:{
+                pf:0,
+                sl:0,
+                sx:0,
+                tf:0,
+                zc:0,
+                dk:0
+            },
+            lp:{
+                pf:0,
+                sl:0,
+                sx:0,
+                tf:0,
+                zc:0,
+                dk:0
+            }
+        }
+    },
+    watch:{
+        CpublicEx(){
+            let pe = 0;
+            for(let i in this.arg){
+                pe += i.zc;
+            }
+            this.publicEx = pe;
+            return pe;
+        }
     },
     methods:{
+        Cmn(code){
+            let coder = this.arg[code];
+            console.log(coder);
+            return ((coder.pf*0.942)+coder.sl+coder.sx-coder.tf+coder.zc+(this.pe/3));
+        },
         num(item){
             var val = 0;
             for(var i in item){

@@ -28,13 +28,14 @@
 		<!-- -->
 		<script src="js/easyUpload.js/easyUpload.js"></script>
     </head>
-   	<body>      
+   	<body>
+		   <!--      
 	   	<div id="head">
-		   <!-- header -->
+	        header 
 			 <app-header></app-header>
     	</div>		
 		<hr/>
-
+		-->
 		<div class="container-fluid" id="vm">
 			<div class="row">
 				<div class="col-md-12">
@@ -50,7 +51,7 @@
 					</div>
 				</div>
 				<hr/>
-				<div class="col-md-12">
+				<div class="col-md-12 ">
 						<table class="table" class="table-striped table-condensed table-striped table-bordered table-hover table-responsive">
 							
 							<tbody  v-for="(item,name) in Accpt">
@@ -80,6 +81,66 @@
 								<td v-for="item in Company">{{item.val}}</td>
 							</tr>
 						</tbody>
+					</table>
+				</div>
+				
+				<div class="col-md-12">
+						<span class="badge badge-primary">汇总统计每人月度</span>
+					<table class="table table-{1:striped|sm|bordered|hover|inverse} table-responsive">
+						<thead class="thead-inverse|thead-default">
+							<tr>
+								<th>code</th>
+								<th>税前派费</th>
+								<th>上楼费</th>
+								<th>手续费</th>
+								<th>退到付款</th>
+								<th>公共支出</th>
+								<th>结余(分摊支出)</th>
+								<th>实际打款</th>
+							</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td scope="row">蔡瑞</td>
+									<td><input v-model="arg.cr.pf" type="number" class="form-control"/></td>
+									<td><input v-model="arg.cr.sl" type="number" class="form-control"/></td>
+									<td><input v-model="arg.cr.sx" type="number" class="form-control"/></td>
+									<td><input v-model="arg.cr.tf" type="number" class="form-control"/></td>
+									<td><input v-model="arg.cr.zc" type="number" class="form-control"/></td>
+									<td>{{Cmn('cr')}}</td>
+									<td><input v-model="arg.cr.dk" type="number" class="form-control"/></td>
+								</tr>
+								<tr>
+										<td scope="row">李飞</td>
+										<td><input v-model="arg.lf.pf" type="number" class="form-control"/></td>
+										<td><input v-model="arg.lf.sl" type="number" class="form-control"/></td>
+										<td><input v-model="arg.lf.sx" type="number" class="form-control"/></td>
+										<td><input v-model="arg.lf.tf" type="number" class="form-control"/></td>
+										<td><input v-model="arg.lf.zc" type="number" class="form-control"/></td>
+										<td>{{Cmn('lf')}}</td>
+										<td><input v-model="arg.lf.dk" type="number" class="form-control"/></td>
+									</tr>
+									<tr>
+											<td scope="row">曾涛</td>
+											<td><input v-model="arg.zt.pf" type="number" class="form-control"/></td>
+											<td><input v-model="arg.zt.sl" type="number" class="form-control"/></td>
+											<td><input v-model="arg.zt.sx" type="number" class="form-control"/></td>
+											<td><input v-model="arg.zt.tf" type="number" class="form-control"/></td>
+											<td><input v-model="arg.zt.zc" type="number" class="form-control"/></td>
+											<td>{{Cmn('zt')}}</td>
+											<td><input v-model="arg.zt.dk" type="number" class="form-control"/></td>
+										</tr>
+										<tr>
+												<td scope="row">李鹏</td>
+												<td><input v-model="arg.lp.pf" type="number" class="form-control"/></td>
+												<td><input v-model="arg.lp.sl" type="number" class="form-control"/></td>
+												<td><input v-model="arg.lp.sx" type="number" class="form-control"/></td>
+												<td><input v-model="arg.lp.tf" type="number" class="form-control"/></td>
+												<td><input v-model="arg.lp.zc" type="number" class="form-control"/></td>
+												<td>{{Cmn('lp')}}</td>
+												<td><input v-model="arg.lp.dk" type="number" class="form-control"/></td>
+											</tr>
+							</tbody>
 					</table>
 				</div>
 			</div>

@@ -26,9 +26,9 @@
     </head>
    	<body>      
 	   	<div id="head">
-		   <!-- header -->
+		   <!-- header
 			 <app-header></app-header>
-			 
+			 -->
 				<nav class="nav justify-content-center|justify-content-end">
 					<a  v-for="i in links" class="nav-link active" :href="i.href"  :target="i.target" :title="i.tittle">{{i.text}}</a>
 				</nav>
@@ -38,11 +38,10 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="col-md-12">
-						<div class="jumbotron jumbotron-fluid">
-							<div class="container">
-								<h1 class="display-7">序列化签收数据/扫描数据</h1>
+						<div class="">
+							<div class="container row">
 								<hr class="my-2">
-								<div class="form-group">
+								<div class="form-group col">
 								  <label for="searchTransOrderStatusSummary">签收数据：</label>
 								  <input v-model="searchTransOrderStatusSummary" type="text" class="form-control" name="searchTransOrderStatusSummary" id="searchTransOrderStatusSummary">
 								  <label for="searchScanRate">扫描数据：</label>
@@ -52,50 +51,10 @@
 								<button type="button" class="btn btn-primary" v-on:click="postV5Data">提交</button>
 							</div>
 							<hr/>
-							<div  v-show="newdata">
 							<div class="row">
-								<div class="col-md-6">
-									<p>StatusSummary</p>
-									<table class="table table-striped">
-										<thead class="thead-light"> 
-											<tr>
-												<th>id</th>
-												<th>val</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr v-for="(i,item) in json.searchTransOrderStatusSummary" :key="item.id">
-												<td>{{item}}</td><td>{{i}}</td>												
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							
-									<div class="col-md-6">
-											<p>ScanRate</p>
-											<table class="table table-striped">
-												<thead class="thead-light"> 
-													<tr>
-														<th>id</th>
-														<th>val</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr v-for="(i,item) in json.searchScanRate" :key="item.id">
-														<td>{{item}}</td><td>{{i}}</td>												
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-							</div>
-							<hr/>
-
-							<!--          -->
-							<div class="card" v-show="newdata">
+							<div class="card col" >
 							  <div class="card-body">
 								<blockquote class="blockquote">
-								  <p>序列化条款</p>
 								  <p>合计共有<small>{{dispUnAcceptCount}}</small>票货物未签收</p>
 								  <div class="form-group">
 									<label for="">{{select.a.name}}</label>
@@ -123,13 +82,14 @@
 							  </div>
 							</div>
 							<!--         -->
-							<div class="card text-left">
+							<div class="card text-left col">
 							  <img class="card-img-top"  alt="">
 							  <div class="card-body">
 								<h4 class="card-title">格式化条文</h4>
-								<textarea name="" id="" cols="80" rows="10">{{bulletin}}</textarea>
+								<textarea name="" id="" cols="60" rows="6">{{bulletin}}</textarea>
 								</div>
 								<button type="button" class="btn btn-primary" v-on:click="bulletinWriteLog">写入log</button>
+							</div>
 							</div>
 							<!--     -->
 							<hr/>
