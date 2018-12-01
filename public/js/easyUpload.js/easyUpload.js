@@ -6,13 +6,13 @@ https://github.com/funnyque
 ; (function ($) {
   $.fn.easyUpload = function (opts) {
     var defaults = {
-      allowFileTypes: '*.pdf;*.doc;*.docx;*.jpg',//允许上传文件类型，格式'*.pdf;*.doc;'
+      allowFileTypes: '*.doc;*.docx',//允许上传文件类型，格式'*.pdf;*.doc;'
       allowFileSize: 100000,
       selectText: '选择文件',//上传按钮文案
       multi: true,//是否允许多文件上传
       multiNum: 5,//多文件上传时允许的有效文件数
       showNote: true,//是否展示文件上传说明
-      note: '提示：最多上传5个文件，超出默认前五个，支持格式为：doc、docx、pdf',//文件上传说明
+      note: '提示：最多上传5个文件，超出默认前五个，支持格式为：doc、docx.',//文件上传说明
       showPreview: true,
       url: '',//上传文件地址
       fileName: 'file',//文件配置参数

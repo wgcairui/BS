@@ -1,0 +1,13 @@
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten] MongoDB starting : pid=5122 port=27017 dbpath=/home/cairui/DataDir/Mongodb/ 64-bit host=cr-think
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten] db version v3.6.3
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten] git version: 9586e557d54ef70f9ca4b43c26892cd55257e1a5
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.1.0g  2 Nov 2017
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten] allocator: tcmalloc
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten] modules: none
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten] build environment:
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten]     distarch: x86_64
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten]     target_arch: x86_64
+2018-12-01T20:33:22.985+0800 I CONTROL  [initandlisten] options: { storage: { dbPath: "/home/cairui/DataDir/Mongodb/" } }
+2018-12-01T20:33:22.986+0800 I STORAGE  [initandlisten] exception in initAndListen: DBPathInUse: Unable to lock the lock file: /home/cairui/DataDir/Mongodb/mongod.lock (Resource temporarily unavailable). Another mongod instance is already running on the /home/cairui/DataDir/Mongodb/ directory, terminating
+2018-12-01T20:33:22.986+0800 I CONTROL  [initandlisten] now exiting
+2018-12-01T20:33:22.986+0800 I CONTROL  [initandlisten] shutting down with code:100

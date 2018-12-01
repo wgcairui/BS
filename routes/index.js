@@ -37,7 +37,7 @@ router.get('/get', function(req, res) {
 
     case 'get_bulletin':
       const get_bulletin = ()=>{
-        mongo.findlimit('BS','bulletin',{},10,(result)=>{
+        mongo.findlimit('BS','bulletin',{},{'date':-1},10,(result)=>{
           res.json(result);
         });
       };

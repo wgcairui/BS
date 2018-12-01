@@ -82,6 +82,7 @@ const vm = new Vue({
             },
             success:(data)=>{
                 vm.Accpt = data;
+                
             }
            });
 
