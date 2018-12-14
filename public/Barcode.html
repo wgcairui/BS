@@ -1,0 +1,83 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <title>Barcode</title>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+        <link rel="shortcut icon" href="ico/favicon.ico">
+		<link rel="apple-touch-icon" href="ico/apple-touch-icon.png">
+		<link rel="stylesheet" href="css/main.css">
+		<!-- 新 Bootstrap4 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+ 
+		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+ 
+		<!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+		<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+ 
+		<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+		<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+        <script src="js/vue.js"></script>
+        <script src="js/cryptico.min.js"></script>
+        
+		<script src="js/Vue_template.js"></script>
+        <!--page js-->
+        
+    </head>
+    
+    <body >
+        <div class="container-fluid b4">
+            <div class="row" id="code">
+                <div class="col-3">
+                    <div class="jumbotron">
+                        <div class="form-group">
+                          <label for="">input son number:{{line.length}}</label>
+                          <textarea style="height:500px" class="form-control mh-100" name="" id="" rows="3" autofocus v-model='BarcodeText'></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" name="" id="" class="btn btn-primary btn-lg btn-block" @click='Barcode' @keyup.77='Barcode'>sumbit(F8)</button>
+                            <hr class="my-2">
+                          <label for="">宽度(width):{{size.w}}px</label>
+                          <input type="text" class="form-control" name="" v-model='size.w'>
+                          <label for="">高度(height):{{size.h}}px</label>
+                          <input type="text" class="form-control" v-model='size.h'>
+                          <hr/>
+                          <button type="button" class="btn btn-primary btn-block" @keyup.enter="toright" @click="toright" v-show='c1'>下一页(enter)</button>
+                        </div>
+                    </div>
+                    </div>
+
+                <div class="col-9">
+                    <div class="jumbotron row" id="jc">
+                        <div class="col-6">
+                        <ul>                            
+                            <li><canvas id='0'></canvas></li>
+                            <li><canvas id='1'></canvas></li>
+                            <li><canvas id='2'></canvas></li>
+                            <li><canvas id='3'></canvas></li>
+                            <li><canvas id='4'></canvas></li>
+                            <li><canvas id='5'></canvas></li>
+                        </ul>    
+                        </div>
+                        <div class="col-6">
+                        <ul>                            
+                            <li><canvas id='6'></canvas></li>
+                            <li><canvas id='7'></canvas></li>
+                            <li><canvas id='8'></canvas></li>
+                            <li><canvas id='9'></canvas></li>
+                            <li><canvas id='10'></canvas></li>
+                            <li><canvas id='11'></canvas></li>
+                        </ul> 
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="js/Barcode.js"></script>
+    <script src="js/JsBarcode.code128.min.js"></script>
+</html>

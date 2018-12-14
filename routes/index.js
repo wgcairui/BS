@@ -6,8 +6,9 @@ const mongo = require('../lib/Mongo');
 const fs = require('fs');
 const path = require('path');
 const ParesXlsx = require('../lib/ParseSlsx');
+const JsBarcode = require('../lib/JsBarcode');
 
-/* GET home page. */
+/* GET home page. */ 
 router.get('/get', function(req, res) {
   let id = req.query.id;
   switch(id){
@@ -54,6 +55,12 @@ router.get('/get', function(req, res) {
       ParesXlsx.Classify_Company('V5导出-预付款对账统计.xlsx',(data)=>{
         res.json(data);
       });
+    break;
+
+    case "Barcode":
+      let data = req.query.data;
+      res.json(JsBarcode(data[1])._renderProperties);
+      
     break;
 
   }

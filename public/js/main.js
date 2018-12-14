@@ -150,7 +150,7 @@ $.ajaxSetup({
 			links:[
 				{href:'https://v5.800best.com/login',target:'_blank',tittle:'V5',text:'V5',type:'link'},
 				{href:'details.html',target:'_blank',tittle:'details',text:'月度账目核算',type:'link'},
-				{href:'https://www.barcode-generator.de/V2/zh/index.jsp',target:'_blank',tittle:'shap code',text:'批量生成条形码',tpye:'link'}
+				{href:'Barcode.html',target:'',tittle:'shap code',text:'批量生成条形码',tpye:'link'}
 			]
 		},
 		
