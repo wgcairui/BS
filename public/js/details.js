@@ -47,7 +47,18 @@ const vm = new Vue({
                 zc:0,
                 dk:0
             }
-        }
+        },
+        //select文件列表
+        filelist:{},
+        filelisttemp:[],//存放getfilelist
+        filelist_select:0,
+        //修改文件列表缓存
+        reg_filename:{
+            new:'',
+            old:''
+        },
+        //month
+        Month:new Date().getMonth()
     },
     watch:{
         CpublicEx(){
@@ -59,10 +70,50 @@ const vm = new Vue({
             return pe;
         }
     },
+    computed: {
+        //选择文件列表-名称
+        selectlist(){
+            var arr = [];
+            for(var i in this.filelist_select){
+                var ni = Number(this.filelist_select[i]);
+                arr.push(this.filelist[ni]);
+            }
+            return(arr);
+        }  
+    },
     methods:{
+        //rm file
+        RM_file(){
+            this.AJAX("rm_file",this.selectlist,'GET','get',(data)=>{
+                if(data.stat == 200){
+                    this.filelist_select = [];
+                    this.GET_filelist();
+                }
+                
+            });
+        },
+        //click filename
+        click_rename:function($event){
+            this.reg_filename.old = $event.target.innerText;
+            this.reg_filename.new = $event.target.innerText;
+            $("#reg_name").modal("show");
+        },
+        //rename filename
+        reg_filenames(){
+            //console.log(this.reg_filename);
+            this.AJAX("reg_filename",this.reg_filename,"GET","get",(data)=>{
+                if(data.stat == 200){
+                    $("#reg_name").modal("hide");
+                    this.GET_filelist();
+
+                }
+                
+            });
+            
+        },
         Cmn(code){
             let coder = this.arg[code];
-            console.log(coder);
+            //console.log(coder);
             return ((coder.pf*0.942)+coder.sl+coder.sx-coder.tf+coder.zc+(this.pe/3));
         },
         num(item){
@@ -72,32 +123,61 @@ const vm = new Vue({
             }
             return val;
         },
+        input_modal(){
+            $("#modal1").modal('show');
+        },
        //ParesXlsx 解构xlsx文档
        ParesXlsx(){
-           $.ajax({
-            type:'GET',
-            url:'get',
+           var p = {};
+           var pc = '';
+           //console.log(typeof(this.filelisttemp));
+           for(var i of this.filelisttemp){
+               //console.log(i);
+               if(i.includes(this.Month+'月')){
+                if(i.includes('预付款对账统计')){
+                    pc = i;
+                }else if(i.includes('签收查询')){
+                    p.qs = i;
+                }else{
+                    p.mx = i;
+                }
+               }
+           }
+           this.AJAX('ParesXlsx',p,'GET','get',(data)=>{
+            vm.Accpt = data;
+           });
+           this.AJAX('ParesXlsx_company',pc,'GET','get',(data)=>{
+            vm.Company = data;
+           });
+       },
+       //get filelist
+       GET_filelist(){
+        this.AJAX('get_fielist',{},'GET','get',(data)=>{
+            var j = {};
+            vm.filelisttemp = data;
+                for(var i=0;i<data.length;i++){
+                    j[i] = data[i];
+                }
+                vm.filelist = j;
+           });
+       },
+       AJAX(id,json,type,url,callback){
+        $.ajax({
+            type:type,
+            url:url,
             data:{
-                id:'ParesXlsx'
+                id:id,
+                data:json
             },
             success:(data)=>{
-                vm.Accpt = data;
-                
+                callback(data);
             }
-           });
-
-           $.ajax({
-            type:'GET',
-            url:'get',
-            data:{
-                id:'ParesXlsx_company'
-            },
-            success:(data)=>{
-                vm.Company = data;
-            }
-           });
-       }
+        });
+         }
     
+    },
+    created () {
+        this.GET_filelist();
     }
 });
 
@@ -124,6 +204,7 @@ $('#easyContainer').easyUpload({
     okCode: 200,//与后端返回数据code值一致时执行成功回调，不配置默认200
     successFunc: function(res) {
       console.log('成功回调', res);
+      vm.GET_filelist();
     },//上传成功回调函数
     errorFunc: function(res) {
       console.log('失败回调', res);

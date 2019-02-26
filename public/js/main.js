@@ -13,11 +13,16 @@ $.ajaxSetup({
 		el:'#vm',
 		data:{
 			newdata:false,
-			searchTransOrderStatusSummary:'',
-			searchScanRate:'',
-			bulletin_list:[{date:'null',data:'null'}],
+			searchTransOrderStatusSummary:'{"code":"200","vo":{"sendUnAcceptCount":0,"sendUnAccept1Count":1,"sendUnAccept2Count":2,"sendUnAccept3Count":3,"dispShouldAcceptCount":4,"dispAcceptedCount":0,"dispUnAcceptCount":3,"dispUnAccept1Count":4,"dispUnAccept2Count":5,"dispUnAccept3Count":1,"dispAcceptPromptness":100.0,"dispUnAccept3Sum":0.0}}',
+			searchScanRate:'{"code":"200","vo":{"lastDaySendShouldCount":0,"lastDaySendScanedCount":0,"lastDaySendScanRate":0.0,"curSendShouldScanCount":0,"hisSendShouldScanCount":0,"curSendScanedCount":0,"curSendNotScanCount":0,"curSendScanRate":0.0,"lastDayArrvShouldCount":0,"lastDayArrvScanedCount":0,"lastDayArrvScanRate":0.0,"curArrvShouldScanCount":0,"hisArrvShouldScanCount":0,"curArrvScanedCount":0,"curArrvNotScanCount":0,"curArrvScanRate":0.0}}',
+			bulletin_list:[{date:'未定义',data:'未定义'}],
 			json:{
-				searchTransOrderStatusSummary:{},
+				searchTransOrderStatusSummary:{
+					dispUnAcceptCount:0,
+					dispUnAccept1Count:0,
+					dispUnAccept2Count:0,
+					dispUnAccept3Count:0
+				},
 				searchScanRate:{},
 				feeList:{}
 			},
@@ -37,6 +42,18 @@ $.ajaxSetup({
 				d:{
 					name:'客户要求下周一收',
 					val:0
+				},
+				l:{
+					name:'稽查破损',
+					val:0
+				},
+				m:{
+					name:'客诉破损',
+					val:0
+				},
+				n:{
+					name:'稽查遗失',
+					val:0
 				}
 			},
 			argment:{
@@ -53,13 +70,22 @@ $.ajaxSetup({
 					curArrvNotScanCount:0,
 					curArrvScanRate:0
 				}
-			}
+			},
+			accpt_data:{
+				now_data:[],
+				ago_data:[]
+			},
+			bulletin:""
 		},
 		computed:{
 			dispUnAcceptCount(){
 				return(this.json.searchTransOrderStatusSummary.dispUnAcceptCount);
 			},
-			bulletin(){
+			ago_dispUnAcceptCount(){
+				let this_Status = this.json.searchTransOrderStatusSummary;
+				return(this_Status.dispUnAccept1Count+this_Status.dispUnAccept2Count+this_Status.dispUnAccept3Count);
+			},
+			/*bulletin(){
 				const date = new Date();
 				let bulletinHeader = "\【武昌水果湖二派网点"+(date.getMonth()+1)+"."+(date.getDate())+"日质量汇报】\n";
 				let wq = "";
@@ -78,7 +104,7 @@ $.ajaxSetup({
 				let curArrvScanRate = "2,扫描率："+this.argment.ScanRate.curArrvScanRate+"%,应扫"+this.argment.ScanRate.curArrvShouldScanCount+",已扫"+this.argment.ScanRate.curArrvScanedCount+",未扫"+this.argment.ScanRate.curArrvNotScanCount+ls;
 				let dispUnAcceptCountCause = "";
 				return bulletinHeader+dispAcceptPromptness+curArrvScanRate+dispUnAcceptCountCause;
-			}
+			}*/
 		},
 		methods:{
 			postV5Data(){
@@ -125,6 +151,16 @@ $.ajaxSetup({
 						alert('write log in mongo ok!!');
 					}
 				});
+			},
+			now_data(e){
+				if(e.val >0){
+					accpt_data.now_data.push(e.name+e.val+'票');
+				}	
+			},
+			ago_data(e){
+				if(e.val >0){
+					accpt_data.ago_data.push(e.name+e.val+'票');
+				}	
 			}
 		},
 
@@ -139,6 +175,35 @@ $.ajaxSetup({
 					vm.bulletin_list = data;
 				}
 			});
+		},
+		components: {
+			'app-select':{
+				template:"<div class=\"form-group\" role=\"form\">\
+							<label for=\"\">{{selects.name}}</label>\
+							<select class=\"form-control\"  v-model=\"val\" @change=\"$emit('inc_change',[selects.name,val])\">\
+								<option value=\"0\">0</option>\
+				  				<option v-for=\"num in dispunacceptcount\" v-bind:value=\"num\">{{num}}</option>\
+							</select></div>",
+				props: {
+					dispunacceptcount:{
+						type:'Number',
+						default:10
+					},
+					select:{
+						type:'Object',
+						default:{
+							name:'',
+							val:0
+						}
+					}
+				},
+				data(){
+					return{
+						selects:this.select,
+						val:0
+					};
+				}
+			}
 		}
 		
 	});

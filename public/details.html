@@ -39,30 +39,72 @@
 		<div class="container-fluid" id="vm">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="col-md-8">
+					<div class="row">
+					<div class="col-md-8 card">
 						<div id="easyContainer"></div>
 					</div>
-					<hr/>
-					<div class="col-md-2">
+					<div class="col-4 card">
 						<div class="form-group">
-							<button type="button" class="btn btn-primary btn-block" @click='ParesXlsx'>解构xlsx文档</button>
-						</div>						
+						  <label for="">选取检索列表</label>
+						  <select multiple class="form-control" name="" id="" v-model='filelist_select'>
+							<option v-for="(val,key) of filelist" :value="key">{{val}}</option>
+					
+						  </select>
+						</div>
+						
+					</div>
+					</div>
+
+					<hr/>
+					<div class="col-12">
+						<div class="row">							
+							<div class="col-6 card">
+								<app-block title="已选取文件">
+										<ul slot="body">
+											<li v-for="i in selectlist" @click="click_rename">{{i}}</li>
+										</ul>
+								</app-block>
+							</div>
+							<div class="col-6 card">
+								<app-block title="操作">
+										<div class="form-group" slot="body">												
+												<div class="form-inline">
+													<div class="form-group">
+														<p>解构 <input class="form-control" v-model='Month' style="width:50px">月签收账单数据  </p>
+														<a href="#tablelist" type="button" class="btn btn-primary" @click='ParesXlsx'>解构xlsx文档</a>
+													</div>
+												</div>
+												<hr/>
+												
+												<button type="button" class="btn btn-danger btn-xs" @click = "RM_file" v-if="selectlist.length > 0">rm{{selectlist}}</button>
+		
+											</div>
+								</app-block>
+							</div>
+						</div>
+						<!-- modal-->
+						<app-modal ids="reg_name" title="修改文件名" btntext="修改" @modal="reg_filenames">
+							<input class="form-control " v-model="reg_filename.new">
+						</app-modal>
 					</div>
 				</div>
 				<hr/>
 				<div class="col-md-12 ">
-						<table class="table" class="table-striped table-condensed table-striped table-bordered table-hover table-responsive">
+						<table class="table" class="table-striped table-striped table-bordered table-hover table-responsive">
 							
 							<tbody  v-for="(item,name) in Accpt">
 								<tr>
 										<th>Accpt</th>
-										<th v-for="costtype in item">{{costtype.costtype}}</th>
-										<th>合计</th>
+										<th v-for="(costtype,n) in item" v-if="n != 'xp'">{{costtype.costtype}}</th>
+										<th>小票数/小票补贴</th>
+
+										
 								</tr>
 								<tr>
-									<td>{{name}}</td>
-									<td v-for="cost in item">{{cost.cost}}</td>
-									<td>{{num(item)}}</td>
+									<td>{{item.name}}</td>
+									<td v-for="(cost,n) in item" v-if="n != 'xp'">{{cost.cost}}</td>
+									<td>{{item.xp.xp_num}}/{{item.xp.xp_bt}}</td>
+									
 								</tr>								
 							</tbody>
 						</table>
@@ -83,7 +125,7 @@
 					</table>
 				</div>
 				
-				<div class="col-md-12">
+				<div class="col-md-12 hidden" id="tablelist">
 						<span class="badge badge-primary">汇总统计每人月度</span>
 					<table class="table table-{1:striped|sm|bordered|hover|inverse} table-responsive">
 						<thead class="thead-inverse|thead-default">

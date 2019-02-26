@@ -20,7 +20,7 @@
  
 		<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
 		<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-        <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+        <script src="https://cdn.bootcss.com/vue/2.6.3/vue.min.js"></script>
 		<script src="js/cryptico.min.js"></script>
 		<script src="js/Vue_template.js"></script>
     </head>
@@ -41,48 +41,57 @@
 						<div class="">
 							<div class="container row">
 								<hr class="my-2">
-								<div class="form-group col">
+								<div class="col-8">
+								<div class="form-group">
 								  <label for="searchTransOrderStatusSummary">签收数据：</label>
 								  <input v-model="searchTransOrderStatusSummary" type="text" class="form-control" name="searchTransOrderStatusSummary" id="searchTransOrderStatusSummary">
 								  <label for="searchScanRate">扫描数据：</label>
-								  <input v-model="searchScanRate" type="text" class="form-control" name="searchScanRate" id="searchScanRate">
-								
+								  <input v-model="searchScanRate" type="text" class="form-control" name="searchScanRate" id="searchScanRate">								
 								</div>
 								<button type="button" class="btn btn-primary" v-on:click="postV5Data">提交</button>
 							</div>
+							
+							<div class=" col-4">
+								<div class="">
+									<div class=" form-inline">
+											<app-select :select="select.l" ></app-select>
+											<app-select :select="select.m"></app-select>
+											<app-select :select="select.n"></app-select>
+									</div>
+								</div>
+							</div>
+							</div>
+							
 							<hr/>
 							<div class="row">
-							<div class="card col" >
-							  <div class="card-body">
+							<div class="card col-8" >
+								<div class="row">
+							  <div class=" card-body col-5">
 								<blockquote class="blockquote">
-								  <p>合计共有<small>{{dispUnAcceptCount}}</small>票货物未签收</p>
+								  <p>当日合计<small>{{dispUnAcceptCount}}</small>票货物未签收</p>
 								  <div class="form-group">
-									<label for="">{{select.a.name}}</label>
-									<select class="form-control" name="" id="" v-model="select.a.val">
-										<option value="0">0</option>
-									  <option v-for="num in dispUnAcceptCount" v-bind:value="num">{{num}}</option>
-									</select>
-									<label for="">{{select.b.name}}</label>
-									<select class="form-control" name="" id="" v-model="select.b.val">
-										<option value="0">0</option>
-									  <option v-for="num in dispUnAcceptCount" v-bind:value="num">{{num}}</option>
-									</select>
-									<label for="">{{select.c.name}}</label>
-									<select class="form-control" name="" id="" v-model="select.c.val">
-										<option value="0">0</option>
-									  <option v-for="num in dispUnAcceptCount" v-bind:value="num">{{num}}</option>
-									</select>
-									<label for="">{{select.d.name}}</label>
-									<select class="form-control" name="" id="" v-model="select.d.val">
-										<option value="0">0</option>
-									  <option v-for="num in dispUnAcceptCount" v-bind:value="num">{{num}}</option>
-									</select>
+										<app-select :select="select.a" :dispunacceptcount="dispUnAcceptCount" @inc_change="now_data($event)"></app-select>
+										<app-select :select="select.b" :dispunacceptcount="dispUnAcceptCount" @inc_change="now_data($event)"></app-select>
+										<app-select :select="select.c" :dispunacceptcount="dispUnAcceptCount" @inc_change="now_data($event)"></app-select>
+										<app-select :select="select.d" :dispunacceptcount="dispUnAcceptCount" @inc_change="now_data($event)"></app-select>
 								  </div>
 								</blockquote>
-							  </div>
+								</div>
+								<div class="card-body col-5">
+									<blockquote class="blockquote">
+										<p>超时合计<small>{{ago_dispUnAcceptCount}}</small>票货物未签收</p>
+										<div class="form-group">
+											<app-select :select="select.a" :dispunacceptcount="ago_dispUnAcceptCount" @inc_change="ago_data($event)"></app-select>
+											<app-select :select="select.b" :dispunacceptcount="ago_dispUnAcceptCount" @inc_change="ago_data($event)"></app-select>
+											<app-select :select="select.c" :dispunacceptcount="ago_dispUnAcceptCount" @inc_change="ago_data($event)"></app-select>
+											<app-select :select="select.d" :dispunacceptcount="ago_dispUnAcceptCount" @inc_change="ago_data($event)"></app-select>
+										</div>
+									</blockquote>
+									</div>
+								</div>
 							</div>
 							<!--         -->
-							<div class="card text-left col">
+							<div class="card text-left col-4">
 							  <img class="card-img-top"  alt="">
 							  <div class="card-body">
 								<h4 class="card-title">格式化条文</h4>

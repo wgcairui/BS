@@ -8,7 +8,10 @@ const path = require('path');
 const ParesXlsx = require('../lib/ParseSlsx');
 const JsBarcode = require('../lib/JsBarcode');
 
+const Month = new Date().getMonth();
+
 /* GET home page. */ 
+//翻转json
 router.get('/get', function(req, res) {
   let id = req.query.id;
   switch(id){
@@ -46,13 +49,13 @@ router.get('/get', function(req, res) {
     break;
       //提取'V5导出-预付款明细查询.xlsx','V5导出-签收查询.xlsx'，返回json
     case 'ParesXlsx':
-      ParesXlsx.Classify_Codeinfo('V5导出-预付款明细查询.xlsx','V5导出-签收查询.xlsx',(data)=>{
+      ParesXlsx.Classify_Codeinfo(req.query.data.mx,req.query.data.qs,(data)=>{
         res.json(data);
       });
     break;
       //提取
     case 'ParesXlsx_company':
-      ParesXlsx.Classify_Company('V5导出-预付款对账统计.xlsx',(data)=>{
+      ParesXlsx.Classify_Company(req.query.data,(data)=>{
         res.json(data);
       });
     break;
@@ -62,7 +65,32 @@ router.get('/get', function(req, res) {
       res.json(JsBarcode(data[1])._renderProperties);
       
     break;
+//----------------------------------------------------------
+    case 'get_fielist':
+      fs.readdir('public/file',(err,data)=>{
+        data.pop();
+        res.json(data);
+      });
+    break;
 
+    case 'reg_filename':
+      var old = path.join('public/file/',req.query.data.old);
+      var newfilename = path.join('public/file/',req.query.data.new);
+      fs.rename(old,newfilename,(err)=>{
+        if(err) throw err;
+        res.json({stat:200});
+      });
+    break;
+
+    case 'rm_file':
+      var files = req.query.data;
+      for (var i of files){
+        fs.renameSync(path.join('public/file/',i),path.join('public/file/rm/',i));
+        //fs.unlinkSync(path.join('public/file/',i));
+        //
+      }
+      res.json({stat:200});
+    break;
   }
 });
 
@@ -79,6 +107,11 @@ router.post('/upload',function (req,res) {
   //console.log(req.files);
   const files = req.files[0];
   let originalname = files.originalname;
+  if(originalname.includes("V5导出")){
+    originalname = originalname.replace("V5导出",Month+'月');
+  }
+
+  console.log(originalname);
   let tempPath = files.path;
   fs.rename(tempPath,path.join('public/file/',originalname),(err)=>{
     if(err){
