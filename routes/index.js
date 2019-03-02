@@ -68,7 +68,7 @@ router.get('/get', function(req, res) {
 //----------------------------------------------------------
     case 'get_fielist':
       fs.readdir('public/file',(err,data)=>{
-        data.pop();
+        //data.pop();
         res.json(data);
       });
     break;
