@@ -6,7 +6,6 @@ const mongo = require('../lib/Mongo');
 const fs = require('fs');
 const path = require('path');
 const ParesXlsx = require('../lib/ParseSlsx');
-const JsBarcode = require('../lib/JsBarcode');
 
 const Month = new Date().getMonth();
 
@@ -60,11 +59,7 @@ router.get('/get', function(req, res) {
       });
     break;
 
-    case "Barcode":
-      let data = req.query.data;
-      res.json(JsBarcode(data[1])._renderProperties);
-      
-    break;
+
 //----------------------------------------------------------
     case 'get_fielist':
       fs.readdir('public/file',(err,data)=>{
